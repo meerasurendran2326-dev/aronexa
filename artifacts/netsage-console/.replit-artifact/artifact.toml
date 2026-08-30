@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "NetSage AI Console"
+description = "A dark network operations console for evidence-driven troubleshooting, deterministic validation, AI diagnosis, human review, analytics, and responsible AI auditing."
+version = "1.0.0"
+id = "artifacts/netsage-console"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21946
+
+[services.development]
+run = "pnpm --filter @workspace/netsage-console run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/netsage-console", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/netsage-console/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21946"
+BASE_PATH = "/"

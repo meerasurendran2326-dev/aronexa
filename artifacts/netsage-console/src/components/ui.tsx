@@ -1,0 +1,27 @@
+import { AlertTriangle, Check, CheckCircle2, Clock3, Copy, Loader2, XCircle } from 'lucide-react';
+import { useState } from 'react';
+import type { Severity } from '@/types';
+
+export function Button({ children, variant = 'primary', className = '', ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'ghost' | 'danger' }) {
+  const variants = { primary: 'bg-primary text-primary-foreground shadow-sm hover:brightness-110', secondary: 'border border-border bg-card text-foreground hover:bg-muted', ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground', danger: 'border border-[hsl(var(--destructive)/.3)] bg-[hsl(var(--destructive)/.08)] text-destructive hover:bg-[hsl(var(--destructive)/.14)]' };
+  return <button {...props} className={`inline-flex min-h-9 items-center justify-center gap-2 rounded-md px-3.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}>{children}</button>;
+}
+export function Panel({ children, className = '', ...props }: React.HTMLAttributes<HTMLDivElement>) { return <section {...props} className={`rounded-lg border border-card-border bg-card shadow-[0_1px_2px_hsl(var(--foreground)/.03)] ${className}`}>{children}</section>; }
+export function StatusPill({ status }: { status: string }) {
+  const key = status.toLowerCase().replaceAll(' ', '_');
+  const style = key.includes('critical') || key.includes('failed') || key.includes('rejected') ? 'bg-[hsl(var(--destructive)/.1)] text-destructive' : key.includes('high') || key.includes('warning') || key.includes('pending') || key.includes('needs_review') ? 'bg-[hsl(var(--accent)/.18)] text-[hsl(var(--accent-foreground))]' : key.includes('resolved') || key.includes('passed') || key.includes('accepted') || key.includes('diagnosed') || key.includes('complete') ? 'bg-[hsl(var(--primary)/.11)] text-primary' : 'bg-muted text-muted-foreground';
+  return <span data-testid={`status-${key}`} className={`inline-flex items-center rounded-full px-2 py-1 font-mono-ui text-[9px] font-medium uppercase tracking-[.07em] ${style}`}>{status.replaceAll('_', ' ')}</span>;
+}
+export function SeverityPill({ severity }: { severity: Severity }) { return <StatusPill status={severity} />; }
+export function MetricCard({ label, value, detail, icon: Icon, tone = 'primary' }: { label: string; value: string | number; detail: string; icon: React.ElementType; tone?: 'primary' | 'accent' | 'danger' }) {
+  const colors = { primary: 'text-primary bg-[hsl(var(--primary)/.1)]', accent: 'text-[hsl(var(--accent-foreground))] bg-[hsl(var(--accent)/.18)]', danger: 'text-destructive bg-[hsl(var(--destructive)/.1)]' };
+  return <Panel className="relative overflow-hidden p-5"><div className="flex items-start justify-between"><div className="font-mono-ui text-[9px] uppercase tracking-[.16em] text-muted-foreground">{label}</div><span className={`grid h-8 w-8 place-items-center rounded-md ${colors[tone]}`}><Icon size={16} /></span></div><div data-testid={`metric-${label.toLowerCase().replaceAll(' ', '-')}`} className="mt-4 text-[27px] font-extrabold tracking-[-.05em]">{value}</div><div className="mt-1 text-[11px] text-muted-foreground">{detail}</div></Panel>;
+}
+export function Skeleton({ className = '' }: { className?: string }) { return <div className={`animate-pulse rounded-md bg-muted ${className}`} />; }
+export function EmptyState({ title, detail }: { title: string; detail: string }) { return <div className="grid min-h-[220px] place-items-center rounded-lg border border-dashed border-border p-8 text-center"><div><div className="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-full bg-muted text-muted-foreground"><Clock3 size={18} /></div><h3 className="text-sm font-bold">{title}</h3><p className="mt-1 text-xs text-muted-foreground">{detail}</p></div></div>; }
+export function ErrorState({ retry }: { retry: () => void }) { return <div className="grid min-h-[180px] place-items-center rounded-lg border border-[hsl(var(--destructive)/.3)] bg-[hsl(var(--destructive)/.04)] p-8 text-center"><div><AlertTriangle className="mx-auto mb-3 text-destructive" size={22} /><h3 className="text-sm font-bold">Signal unavailable</h3><p className="mt-1 text-xs text-muted-foreground">The console could not load this view.</p><Button onClick={retry} variant="secondary" className="mt-4">Retry</Button></div></div>; }
+export function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+  return <button aria-label="Copy command" data-testid="button-copy-command" onClick={() => { void navigator.clipboard?.writeText(value); setCopied(true); window.setTimeout(() => setCopied(false), 1500); }} className="rounded p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">{copied ? <Check size={14} /> : <Copy size={14} />}</button>;
+}
+export function RuleStatusIcon({ status }: { status: string }) { return status === 'passed' ? <CheckCircle2 className="text-primary" size={17} /> : status === 'failed' ? <XCircle className="text-destructive" size={17} /> : status === 'warning' ? <AlertTriangle className="text-[hsl(var(--accent-foreground))]" size={17} /> : <Loader2 className="animate-spin text-muted-foreground" size={17} />; }

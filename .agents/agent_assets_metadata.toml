@@ -1,0 +1,30 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "HVMRIirzoe76-pK1Er_pg"
+uri = "file://deliverables/netsage-overview-video-code.zip"
+type = "unspecified"
+title = "NetSage animated video source code"
+description = "ZIP archive containing the NetSage overview video source, scenes, generated media assets, configuration, and recording validation script. Build output and dependencies are excluded."
+logical_id = "f447c23b-ff6f-41d1-8251-4e0be6e162a4"
+content_hash = "sha256:c917165bf1be4c5720ccd935be05da6eff7c49a9282857a783083a725f862e48"
+size = 3062205
+mtime_ms = 1788118875796
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:eaafcb45-dc74-4adf-9b1b-090b6fab3776/f447c23b-ff6f-41d1-8251-4e0be6e162a4/6220ce21-e98a-4f7d-b5c9-f71a7a6a13ca"
+storage_version_token = "1788118883339953"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "pqa6kVv4NePrJEW5q2MZa"
+uri = "file://deliverables/netsage-overview-video-code-only.zip"
+type = "unspecified"
+title = "NetSage animated video code only"
+description = "Source-only ZIP containing the React/TypeScript video scenes, animation logic, configuration, and validation script. Generated media assets are excluded."
+logical_id = "4d494f01-b46f-4cd6-a817-ca0b10fca780"
+content_hash = "sha256:f020c9f9dde931882f3be7955a0aa0cc26b089709ff59bf65b317b888e287f25"
+size = 24624
+mtime_ms = 1788118940689
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:eaafcb45-dc74-4adf-9b1b-090b6fab3776/4d494f01-b46f-4cd6-a817-ca0b10fca780/1288c350-c7a0-4a0f-8f2b-f10c89553d84"
+storage_version_token = "1788118945448300"
+content_type = "application/octet-stream"

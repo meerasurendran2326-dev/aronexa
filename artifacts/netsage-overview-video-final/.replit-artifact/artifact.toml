@@ -1,0 +1,28 @@
+kind = "video"
+previewPath = "/netsage-overview-video/"
+title = "NetSage AI Console — Product Overview"
+description = "An animated product overview of the evidence-driven network troubleshooting workflow."
+version = "1.0.0"
+id = "artifacts/netsage-overview-video-final"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/netsage-overview-video/" ]
+localPort = 19793
+
+[services.development]
+run = "pnpm --filter @workspace/netsage-overview-video-final run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/netsage-overview-video-final", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/netsage-overview-video-final/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19793"
+BASE_PATH = "/netsage-overview-video/"
